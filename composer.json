@@ -1,0 +1,29 @@
+{
+    "name": "codehq-dk/repo-info",
+    "description": "Repository Information. Use this to create a list of your code repositories with information defined by plugins",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=8.1",
+        "kodus/uuid-v4": "^1.2.0",
+        "codehq-dk/repo-info-contracts" : "*",
+        "codehq-dk/repo-info-example-plugin" : "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "RepositoryInformation\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RepositoryInformation\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "slince/di" : "^3.2.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit tests"
+    }
+}
