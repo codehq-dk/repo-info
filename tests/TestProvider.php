@@ -46,7 +46,7 @@ class TestProvider
         );
 
         $repository_information_provider = new RepositoryInformationProvider(
-            __DIR__,
+            __DIR__ . DIRECTORY_SEPARATOR . "data",
             $this->repository_list,
             $this->dependecy_injection_container
         );

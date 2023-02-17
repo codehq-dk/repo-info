@@ -2,23 +2,30 @@
 
 namespace RepositoryInformation\Model\CodeRepositoryType;
 
+use Exception;
 use Kodus\Helpers\UUID;
 use RepositoryInformation\Model\InformationBlock;
 use RepositoryInformation\Model\RepositoryCharacteristics;
 use RepositoryInformation\Model\Repository;
 class GitRepository implements Repository
 {
+    private const VALID_ID_REGEX = '/^[0-9a-z-]+/';
+
+    /**
+     * @throws Exception
+     */
     public function __construct(
         private readonly string $id,
         private readonly string $name,
-        private readonly string $ssh_address,
+        private readonly string $git_clone_https_address,
         private readonly RepositoryCharacteristics $repository_characteristics
     ) {
+        $this->throwExceptionOnInvalidId($this->id);
     }
 
     public function downloadCodeToLocalPath(string $local_path): void
     {
-        // TODO: Implement downloadCodeToLocalPath() method.
+        exec("git clone {$this->git_clone_https_address} {$local_path}");
     }
 
     public function createRepositoryTypeInformationBlock(): InformationBlock
@@ -63,7 +70,7 @@ class GitRepository implements Repository
             'fully_qualified_class_name' => self::class,
             'id' => $this->id,
             'name' => $this->name,
-            'ssh_address' => $this->ssh_address,
+            'ssh_address' => $this->git_clone_https_address,
             'repository_characteristics' => $this->repository_characteristics->toArray()
         ];
     }
@@ -76,5 +83,14 @@ class GitRepository implements Repository
            $array['ssh_address'],
            RepositoryCharacteristics::fromArray($array['repository_characteristics'])
        );
+    }
+
+    private function throwExceptionOnInvalidId(string $id): void
+    {
+        preg_match(self::VALID_ID_REGEX, $id, $matches);
+
+        if (count($matches) === 0 || $matches[0] !== $id) {
+            throw new Exception("Repository id value '{$id}' is not a valid format");
+        }
     }
 }
