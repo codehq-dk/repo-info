@@ -7,16 +7,17 @@
         "php": ">=8.1",
         "kodus/uuid-v4": "^1.2.0",
         "codehq-dk/repo-info-contracts" : "*",
-        "codehq-dk/repo-info-example-plugin" : "*"
+        "codehq-dk/repo-info-example-plugin" : "*",
+        "codehq-dk/linux-bash-helper" : "*"
     },
     "autoload": {
         "psr-4": {
-            "RepositoryInformation\\": "src/"
+            "CodeHqDk\\RepositoryInformation\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "RepositoryInformation\\Tests\\": "tests/"
+            "CodeHqDk\\RepositoryInformation\\Tests\\": "tests/"
         }
     },
     "require-dev": {

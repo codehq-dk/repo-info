@@ -1,13 +1,13 @@
 <?php
 
-namespace RepositoryInformation;
+namespace CodeHqDk\RepositoryInformation;
 
-use RepositoryInformation\Factory\InformationFactory;
-use RepositoryInformation\Factory\RepositoryInformationFactory;
-use RepositoryInformation\Model\Repository;
-use RepositoryInformation\Registry\InformationFactoryRegistry;
-use RepositoryInformation\Service\ProviderDependencyService;
-use RepositoryInformation\Services\RepositoryInformationService;
+use CodeHqDk\RepositoryInformation\Factory\InformationFactory;
+use CodeHqDk\RepositoryInformation\Factory\RepositoryInformationFactory;
+use CodeHqDk\RepositoryInformation\Model\Repository;
+use CodeHqDk\RepositoryInformation\Registry\InformationFactoryRegistry;
+use CodeHqDk\RepositoryInformation\Service\ProviderDependencyService;
+use CodeHqDk\RepositoryInformation\Services\RepositoryInformationService;
 use Slince\Di\Container;
 
 class RepositoryInformationProvider implements ProviderDependencyService

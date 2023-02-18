@@ -1,12 +1,12 @@
 <?php
 
-namespace RepositoryInformation\Tests;
+namespace CodeHqDk\RepositoryInformation\Tests;
 
-use RepositoryInformation\Model\CodeRepositoryType\GitRepository;
-use RepositoryInformation\Model\Repository;
-use RepositoryInformation\Model\RepositoryCharacteristics;
-use RepositoryInformation\Provider\HelloWorldInformationFactoryProvider;
-use RepositoryInformation\RepositoryInformationProvider;
+use CodeHqDk\RepositoryInformation\Model\CodeRepositoryType\GitRepository;
+use CodeHqDk\RepositoryInformation\Model\Repository;
+use CodeHqDk\RepositoryInformation\Model\RepositoryCharacteristics;
+use CodeHqDk\RepositoryInformation\Provider\HelloWorldInformationFactoryProvider;
+use CodeHqDk\RepositoryInformation\RepositoryInformationProvider;
 use Slince\Di\Container;
 
 class TestProvider
@@ -19,16 +19,22 @@ class TestProvider
     public function __construct(private readonly array $repository_list =
         [
             new GitRepository(
-                'repo-1',
+                'repo-info-contracts',
                 'Test repository 1',
                 'https://github.com/codehq-dk/repo-info-contracts.git',
                 new RepositoryCharacteristics(true, true, true, false),
             ),
             new GitRepository(
-                'repo-2',
+                'repo-info-example-plugin',
                 'Test repository 2',
                 'https://github.com/codehq-dk/repo-info-example-plugin.git',
                 new RepositoryCharacteristics(true, true, true, false)
+            ),
+            new GitRepository(
+                'code-hq-webpage',
+                'Test repository 3',
+                'git@github.com:codehq-dk/webpage.git',
+                new RepositoryCharacteristics(true, false, false, false)
             )
         ]
     ) {

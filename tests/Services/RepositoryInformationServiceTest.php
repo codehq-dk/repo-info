@@ -1,10 +1,9 @@
 <?php
 
-namespace RepositoryInformation\Tests;
+namespace CodeHqDk\RepositoryInformation\Tests;
 
-use RepositoryInformation\Services\RepositoryInformationService;
+use CodeHqDk\RepositoryInformation\Services\RepositoryInformationService;
 use PHPUnit\Framework\TestCase;
-use Slince\Di\Container;
 
 class RepositoryInformationServiceTest extends TestCase
 {

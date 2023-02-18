@@ -1,31 +1,53 @@
 <?php
 
-namespace RepositoryInformation\Model\CodeRepositoryType;
+namespace CodeHqDk\RepositoryInformation\Model\CodeRepositoryType;
 
+use CodeHqDk\LinuxBashHelper\Bash;
+use CodeHqDk\LinuxBashHelper\Environment;
+use CodeHqDk\LinuxBashHelper\Exception\LinuxBashHelperException;
 use Exception;
 use Kodus\Helpers\UUID;
-use RepositoryInformation\Model\InformationBlock;
-use RepositoryInformation\Model\RepositoryCharacteristics;
-use RepositoryInformation\Model\Repository;
+use CodeHqDk\RepositoryInformation\Model\InformationBlock;
+use CodeHqDk\RepositoryInformation\Model\RepositoryCharacteristics;
+use CodeHqDk\RepositoryInformation\Model\Repository;
+
+/**
+ * Notice. This class requires a installation of git is present on the server
+ */
 class GitRepository implements Repository
 {
     private const VALID_ID_REGEX = '/^[0-9a-z-]+/';
 
     /**
+     * $param string $git_clone_address https / ssh address
+     *
+     * Public repository  -> Use the https address
+     * Private repository -> use the ssh address (This requires that your server have valid ssh keys registered at Github)
+     *
      * @throws Exception
      */
     public function __construct(
         private readonly string $id,
         private readonly string $name,
-        private readonly string $git_clone_https_address,
+        private readonly string $git_clone_address,
         private readonly RepositoryCharacteristics $repository_characteristics
     ) {
         $this->throwExceptionOnInvalidId($this->id);
     }
 
+    /**
+     * @throws Exception
+     */
     public function downloadCodeToLocalPath(string $local_path): void
     {
-        exec("git clone {$this->git_clone_https_address} {$local_path}");
+        $git_path = Environment::getGitPath();
+
+        try {
+            $command = $git_path . " clone {$this->git_clone_address} {$local_path}";
+            Bash::runCommand($command);
+        } catch (LinuxBashHelperException) {
+            throw new Exception("Failed at downloading '{$this->name}' repository to local path '{$local_path}'");
+        }
     }
 
     public function createRepositoryTypeInformationBlock(): InformationBlock
@@ -70,7 +92,7 @@ class GitRepository implements Repository
             'fully_qualified_class_name' => self::class,
             'id' => $this->id,
             'name' => $this->name,
-            'ssh_address' => $this->git_clone_https_address,
+            'ssh_address' => $this->git_clone_address,
             'repository_characteristics' => $this->repository_characteristics->toArray()
         ];
     }

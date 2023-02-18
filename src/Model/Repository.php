@@ -1,19 +1,17 @@
 <?php
 
-namespace RepositoryInformation\Model;
+namespace CodeHqDk\RepositoryInformation\Model;
+
+use Exception;
 
 interface Repository
 {
     public const REPOSITORY_NAME_INFORMATION_BLOCK = 'Repository name';
     public const REPOSITORY_TYPE_INFORMATION_BLOCK = 'Repository type';
 
-    public function __construct(
-        string $id,
-        string $name,
-        string $ssh_address,
-        RepositoryCharacteristics $repository_characteristics
-    );
-
+    /**
+     * @throws Exception An exception is thrown if download fails
+     */
     public function downloadCodeToLocalPath(string $local_path): void;
 
     public function createRepositoryTypeInformationBlock(): InformationBlock;

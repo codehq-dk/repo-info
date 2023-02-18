@@ -1,6 +1,6 @@
 <?php
 
-namespace RepositoryInformation\Model;
+namespace CodeHqDk\RepositoryInformation\Model;
 
 class RepositoryCharacteristics extends RepositoryRequirements
 {

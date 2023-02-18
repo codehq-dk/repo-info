@@ -1,11 +1,11 @@
 <?php
 
-namespace RepositoryInformation\Services;
+namespace CodeHqDk\RepositoryInformation\Services;
 
 use Exception;
-use RepositoryInformation\Factory\RepositoryInformationFactory;
-use RepositoryInformation\Model\RepositoryInformation;
-use RepositoryInformation\Model\Repository;
+use CodeHqDk\RepositoryInformation\Factory\RepositoryInformationFactory;
+use CodeHqDk\RepositoryInformation\Model\RepositoryInformation;
+use CodeHqDk\RepositoryInformation\Model\Repository;
 
 class RepositoryInformationService
 {

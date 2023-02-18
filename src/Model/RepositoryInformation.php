@@ -1,6 +1,6 @@
 <?php
 
-namespace RepositoryInformation\Model;
+namespace CodeHqDk\RepositoryInformation\Model;
 
 use Exception;
 

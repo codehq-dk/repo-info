@@ -1,10 +1,11 @@
 <?php
 
-namespace RepositoryInformation\Factory;
+namespace CodeHqDk\RepositoryInformation\Factory;
 
-use RepositoryInformation\Model\RepositoryInformation;
-use RepositoryInformation\Model\Repository;
-use RepositoryInformation\Registry\InformationFactoryRegistry;
+use CodeHqDk\RepositoryInformation\Model\RepositoryInformation;
+use CodeHqDk\RepositoryInformation\Model\Repository;
+use CodeHqDk\RepositoryInformation\Registry\InformationFactoryRegistry;
+
 class RepositoryInformationFactory
 {
     public function __construct(

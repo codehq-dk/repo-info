@@ -1,8 +1,8 @@
 <?php
 
-namespace RepositoryInformation\Registry;
+namespace CodeHqDk\RepositoryInformation\Registry;
 
-use RepositoryInformation\Factory\InformationFactory;
+use CodeHqDk\RepositoryInformation\Factory\InformationFactory;
 
 class InformationFactoryRegistry
 {
