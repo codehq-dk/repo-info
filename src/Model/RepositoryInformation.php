@@ -76,7 +76,8 @@ class RepositoryInformation
     {
         $information_block_list = [];
         foreach ($information_block_list_array as $information_block_array) {
-            $information_block_list[] = InformationBlock::fromArray($information_block_array);
+            $class = $information_block_array['info_type'];
+            $information_block_list[] = $class::fromArray($information_block_array);
         }
 
         return $information_block_list;

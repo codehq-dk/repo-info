@@ -2,7 +2,7 @@
 
 namespace CodeHqDk\RepositoryInformation\Tests;
 
-use CodeHqDk\RepositoryInformation\Model\CodeRepositoryType\GitRepository;
+use CodeHqDk\RepositoryInformation\Model\GitRepository;
 use CodeHqDk\RepositoryInformation\Model\Repository;
 use CodeHqDk\RepositoryInformation\Model\RepositoryCharacteristics;
 use CodeHqDk\RepositoryInformation\Provider\HelloWorldInformationFactoryProvider;

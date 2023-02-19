@@ -50,12 +50,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codehq-dk/repo-info-contracts.git",
-                "reference": "9545124a10d1ce812aa1204d429409bc2adf4562"
+                "reference": "18b401b0cbd09100f09759754cbb4df886edd2f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codehq-dk/repo-info-contracts/zipball/9545124a10d1ce812aa1204d429409bc2adf4562",
-                "reference": "9545124a10d1ce812aa1204d429409bc2adf4562",
+                "url": "https://api.github.com/repos/codehq-dk/repo-info-contracts/zipball/18b401b0cbd09100f09759754cbb4df886edd2f3",
+                "reference": "18b401b0cbd09100f09759754cbb4df886edd2f3",
                 "shasum": ""
             },
             "require": {
@@ -80,7 +80,7 @@
                 "issues": "https://github.com/codehq-dk/repo-info-contracts/issues",
                 "source": "https://github.com/codehq-dk/repo-info-contracts/tree/main"
             },
-            "time": "2023-02-18T21:40:24+00:00"
+            "time": "2023-02-19T13:30:34+00:00"
         },
         {
             "name": "codehq-dk/repo-info-example-plugin",
@@ -88,12 +88,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codehq-dk/repo-info-example-plugin.git",
-                "reference": "92335ae15dc063f68f0c7441da434d2b991c567b"
+                "reference": "a50445e8adbbdf07a5f0b8f56f376175cd1890f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codehq-dk/repo-info-example-plugin/zipball/92335ae15dc063f68f0c7441da434d2b991c567b",
-                "reference": "92335ae15dc063f68f0c7441da434d2b991c567b",
+                "url": "https://api.github.com/repos/codehq-dk/repo-info-example-plugin/zipball/a50445e8adbbdf07a5f0b8f56f376175cd1890f0",
+                "reference": "a50445e8adbbdf07a5f0b8f56f376175cd1890f0",
                 "shasum": ""
             },
             "require": {
@@ -119,7 +119,7 @@
                 "issues": "https://github.com/codehq-dk/repo-info-example-plugin/issues",
                 "source": "https://github.com/codehq-dk/repo-info-example-plugin/tree/main"
             },
-            "time": "2023-02-18T21:45:56+00:00"
+            "time": "2023-02-19T13:32:25+00:00"
         },
         {
             "name": "kodus/uuid-v4",

@@ -1,15 +1,13 @@
 <?php
 
-namespace CodeHqDk\RepositoryInformation\Model\CodeRepositoryType;
+namespace CodeHqDk\RepositoryInformation\Model;
 
 use CodeHqDk\LinuxBashHelper\Bash;
 use CodeHqDk\LinuxBashHelper\Environment;
 use CodeHqDk\LinuxBashHelper\Exception\LinuxBashHelperException;
+use CodeHqDk\RepositoryInformation\InformationBlocks\RepositoryNameInformationBlock;
+use CodeHqDk\RepositoryInformation\InformationBlocks\RepositoryTypeInformationBlock;
 use Exception;
-use Kodus\Helpers\UUID;
-use CodeHqDk\RepositoryInformation\Model\InformationBlock;
-use CodeHqDk\RepositoryInformation\Model\RepositoryCharacteristics;
-use CodeHqDk\RepositoryInformation\Model\Repository;
 
 /**
  * Notice. This class requires a installation of git is present on the server
@@ -52,27 +50,25 @@ class GitRepository implements Repository
 
     public function createRepositoryTypeInformationBlock(): InformationBlock
     {
-        return new InformationBlock(
-            self::REPOSITORY_TYPE_INFORMATION_BLOCK,
+        return new RepositoryTypeInformationBlock(
             'Repository type',
-            __CLASS__,
+            "Type",
+            "GIT",
             time(),
-            "Repository type",
-            "GIT"
+            '',
+            self::class,
         );
     }
 
     public function createRepositoryNameInformationBlock(): InformationBlock
     {
-        $uuid = UUID::create();
-
-        return new InformationBlock(
-            self::REPOSITORY_NAME_INFORMATION_BLOCK,
+        return new RepositoryNameInformationBlock(
             'Repository name',
-            self::class, time(),
             'Name',
             $this->name,
-            'UUID = ' . $uuid
+            time(),
+            '',
+            self::class,
         );
     }
 
