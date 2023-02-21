@@ -48,7 +48,7 @@ class GitRepository implements Repository
         }
     }
 
-    public function createRepositoryTypeInformationBlock(): InformationBlock
+    public function createRepositoryTypeInformationBlock(): RepositoryTypeInformationBlock
     {
         return new RepositoryTypeInformationBlock(
             'Repository type',
@@ -60,7 +60,7 @@ class GitRepository implements Repository
         );
     }
 
-    public function createRepositoryNameInformationBlock(): InformationBlock
+    public function createRepositoryNameInformationBlock(): RepositoryNameInformationBlock
     {
         return new RepositoryNameInformationBlock(
             'Repository name',

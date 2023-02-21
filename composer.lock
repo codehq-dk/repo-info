@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c7904c8d9a5ca65014fa3ef5cf594d8c",
+    "content-hash": "4e39fae8c4e8ceeff89ac15823614ab7",
     "packages": [
         {
             "name": "codehq-dk/linux-bash-helper",
-            "version": "dev-main",
+            "version": "v0.0.1-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codehq-dk/linux-bash-helper.git",
-                "reference": "29081b363ab71ba3f810fe2212c2c02d3fd16e74"
+                "reference": "d1473bef8507c270090445efbee560b5d82b5974"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codehq-dk/linux-bash-helper/zipball/29081b363ab71ba3f810fe2212c2c02d3fd16e74",
-                "reference": "29081b363ab71ba3f810fe2212c2c02d3fd16e74",
+                "url": "https://api.github.com/repos/codehq-dk/linux-bash-helper/zipball/d1473bef8507c270090445efbee560b5d82b5974",
+                "reference": "d1473bef8507c270090445efbee560b5d82b5974",
                 "shasum": ""
             },
             "require": {
@@ -26,7 +26,6 @@
             "require-dev": {
                 "phpunit/phpunit": "^9.5"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -40,22 +39,22 @@
             "description": "Small helper to make life easier when running bash commands in php with exec command ",
             "support": {
                 "issues": "https://github.com/codehq-dk/linux-bash-helper/issues",
-                "source": "https://github.com/codehq-dk/linux-bash-helper/tree/main"
+                "source": "https://github.com/codehq-dk/linux-bash-helper/tree/v0.0.1-alpha"
             },
-            "time": "2023-02-18T21:14:16+00:00"
+            "time": "2023-02-20T17:18:06+00:00"
         },
         {
             "name": "codehq-dk/repo-info-contracts",
-            "version": "dev-main",
+            "version": "v0.0.1-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codehq-dk/repo-info-contracts.git",
-                "reference": "18b401b0cbd09100f09759754cbb4df886edd2f3"
+                "reference": "e24d15dc4601468fb47702f8625fe33be52bf53f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codehq-dk/repo-info-contracts/zipball/18b401b0cbd09100f09759754cbb4df886edd2f3",
-                "reference": "18b401b0cbd09100f09759754cbb4df886edd2f3",
+                "url": "https://api.github.com/repos/codehq-dk/repo-info-contracts/zipball/e24d15dc4601468fb47702f8625fe33be52bf53f",
+                "reference": "e24d15dc4601468fb47702f8625fe33be52bf53f",
                 "shasum": ""
             },
             "require": {
@@ -64,7 +63,6 @@
             "require-dev": {
                 "phpunit/phpunit": "^9.5"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -78,32 +76,31 @@
             "description": "Repository Information Contract. Depend on this module when creation new repository information factory plugins",
             "support": {
                 "issues": "https://github.com/codehq-dk/repo-info-contracts/issues",
-                "source": "https://github.com/codehq-dk/repo-info-contracts/tree/main"
+                "source": "https://github.com/codehq-dk/repo-info-contracts/tree/v0.0.1-alpha"
             },
-            "time": "2023-02-19T13:30:34+00:00"
+            "time": "2023-02-19T20:41:48+00:00"
         },
         {
             "name": "codehq-dk/repo-info-example-plugin",
-            "version": "dev-main",
+            "version": "v0.0.1-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codehq-dk/repo-info-example-plugin.git",
-                "reference": "a50445e8adbbdf07a5f0b8f56f376175cd1890f0"
+                "reference": "d104b2045d9ad74cca661d28fac5401671add574"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codehq-dk/repo-info-example-plugin/zipball/a50445e8adbbdf07a5f0b8f56f376175cd1890f0",
-                "reference": "a50445e8adbbdf07a5f0b8f56f376175cd1890f0",
+                "url": "https://api.github.com/repos/codehq-dk/repo-info-example-plugin/zipball/d104b2045d9ad74cca661d28fac5401671add574",
+                "reference": "d104b2045d9ad74cca661d28fac5401671add574",
                 "shasum": ""
             },
             "require": {
-                "codehq-dk/repo-info-contracts": "*",
+                "codehq-dk/repo-info-contracts": "v0.0.1-alpha",
                 "php": ">=8.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.5"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -117,9 +114,9 @@
             "description": "Hello World simple example of af Repository Information Plugin",
             "support": {
                 "issues": "https://github.com/codehq-dk/repo-info-example-plugin/issues",
-                "source": "https://github.com/codehq-dk/repo-info-example-plugin/tree/main"
+                "source": "https://github.com/codehq-dk/repo-info-example-plugin/tree/v0.0.1-alpha"
             },
-            "time": "2023-02-19T13:32:25+00:00"
+            "time": "2023-02-19T22:16:06+00:00"
         },
         {
             "name": "kodus/uuid-v4",
@@ -556,12 +553,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "b5f3416da036fb951a557518e8304b3595ff966a"
+                "reference": "87b660f75adb677ea503dd0b999dc90a999ad720"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/b5f3416da036fb951a557518e8304b3595ff966a",
-                "reference": "b5f3416da036fb951a557518e8304b3595ff966a",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/87b660f75adb677ea503dd0b999dc90a999ad720",
+                "reference": "87b660f75adb677ea503dd0b999dc90a999ad720",
                 "shasum": ""
             },
             "require": {
@@ -625,7 +622,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-18T16:27:54+00:00"
+            "time": "2023-02-20T06:08:06+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -874,12 +871,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c1bf2dd252dec994ee27d804c038a98fd0d1d940"
+                "reference": "ada16b71314bc852f7b199856bd2e12930951d24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c1bf2dd252dec994ee27d804c038a98fd0d1d940",
-                "reference": "c1bf2dd252dec994ee27d804c038a98fd0d1d940",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ada16b71314bc852f7b199856bd2e12930951d24",
+                "reference": "ada16b71314bc852f7b199856bd2e12930951d24",
                 "shasum": ""
             },
             "require": {
@@ -968,7 +965,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-18T16:26:49+00:00"
+            "time": "2023-02-20T06:03:35+00:00"
         },
         {
             "name": "psr/container",
