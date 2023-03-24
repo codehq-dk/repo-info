@@ -9,6 +9,11 @@ use CodeHqDk\RepositoryInformation\Factory\RepositoryInformationFactory;
 use CodeHqDk\RepositoryInformation\Model\RepositoryInformation;
 use CodeHqDk\RepositoryInformation\Model\Repository;
 
+/**
+ * This class is the primary entry point to use the Repository Information ecosystem.
+ *
+ * Use the list method to get a list of RepositoryInformation models
+ */
 class RepositoryInformationService
 {
     /**
@@ -22,6 +27,14 @@ class RepositoryInformationService
         private readonly RepositoryInformationFactory $repository_information_factory,
         private readonly InformationBlockFilterService $information_block_filter_service
     ) {}
+
+    public function rebuildCompleteCache(): void
+    {
+        foreach ($this->repository_list as $repository)
+        {
+            $this->buildRepositoryInformationCache($repository);
+        }
+    }
 
     /**
      * @return RepositoryInformation[]
@@ -134,14 +147,6 @@ class RepositoryInformationService
         }
 
         return $cache_folder;
-    }
-
-    public function rebuildCompleteCache(): void
-    {
-        foreach ($this->repository_list as $repository)
-        {
-            $this->buildRepositoryInformationCache($repository);
-        }
     }
 
     /**

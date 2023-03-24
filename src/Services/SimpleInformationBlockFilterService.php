@@ -4,6 +4,23 @@ namespace CodeHqDk\RepositoryInformation\Services;
 
 use CodeHqDk\RepositoryInformation\Service\InformationBlockFilterService;
 
+/**
+ * Simple implementation of the InformationBlockFilterService interface
+ *
+ * Create instances of this object like this:
+ *
+ * $filter_service = new SimpleInformationBlockFilterService(
+ *      new InformationBlockService(),
+ *      [
+ *          'uuid' =>
+ *              [
+ *                  HelloWorldInformationBlock::class,
+ *                  AnotherInformationBlock::class,
+ *                  etc.
+ *              ]
+ *      ]
+ * );
+ */
 class SimpleInformationBlockFilterService implements InformationBlockFilterService
 {
     public function __construct(

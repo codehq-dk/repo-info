@@ -4,6 +4,11 @@ namespace CodeHqDk\RepositoryInformation\Registry;
 
 use CodeHqDk\RepositoryInformation\Factory\InformationFactory;
 
+/**
+ * This registry will hold a list of Repository Information Factories
+ *
+ * @internal
+ */
 class InformationFactoryRegistry
 {
     /**

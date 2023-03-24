@@ -9,7 +9,12 @@ use Exception;
  */
 class RepositoryInformation
 {
+    public const REPOSITORY_ARRAY_KEY = 'repository';
+    public const INFORMATION_BLOCK_LIST_ARRAY_KEY = 'information_block_list';
+
     /**
+     * Do not new instances of this class up yourself. The RepositoryInformationFactory should do that
+     *
      * @param Repository         $repository
      * @param InformationBlock[] $information_block_list
      */
@@ -36,22 +41,21 @@ class RepositoryInformation
      */
     public static function fromArray(array $array): self
     {
-        if (!isset($array['repository']['fully_qualified_class_name'])) {
-            var_dump($array);
+        if (!isset($array[self::REPOSITORY_ARRAY_KEY]['fully_qualified_class_name'])) {
             throw new Exception('Cannot build object from array - array key `fully_qualified_class_name` is missing');
         }
-        $class_name = $array['repository']['fully_qualified_class_name'];
-        $repository = $class_name::fromArray($array['repository']);
+        $class_name = $array[self::REPOSITORY_ARRAY_KEY]['fully_qualified_class_name'];
+        $repository = $class_name::fromArray($array[self::REPOSITORY_ARRAY_KEY]);
 
-        return new self($repository, self::informationBlockFromArray($array['information_block_list']));
+        return new self($repository, self::informationBlockFromArray($array[self::INFORMATION_BLOCK_LIST_ARRAY_KEY]));
     }
 
     public function toArray(): array
     {
         return
             [
-                'repository' => $this->repository->toArray(),
-                'information_block_list' => $this->informationBlocksToArray()
+                self::REPOSITORY_ARRAY_KEY => $this->repository->toArray(),
+                self::INFORMATION_BLOCK_LIST_ARRAY_KEY => $this->informationBlocksToArray()
             ];
     }
 

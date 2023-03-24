@@ -35,12 +35,20 @@ class TestProvider
                 'https://github.com/codehq-dk/repo-info-example-plugin.git',
                 new RepositoryCharacteristics(true, true, true, false)
             ),
+/*
             new GitRepository(
                 'code-hq-webpage',
                 'Test repository 3',
                 'git@github.com:codehq-dk/webpage.git',
                 new RepositoryCharacteristics(true, false, false, false)
             )
+*/
+            new GitRepository(
+                'linux-bash-helper',
+                'Linux Bash helper',
+                'https://github.com/codehq-dk/linux-bash-helper.git',
+                new RepositoryCharacteristics(true, true, false, false)
+            ),
         ]
     ) {
     }

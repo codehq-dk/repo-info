@@ -22,7 +22,7 @@ class RepositoryInformationProvider implements ProviderDependencyService
     public function __construct(
         private readonly string $runtime_path,
         private readonly array $repository_list,
-        private Container $dependency_injection_container
+        private readonly Container $dependency_injection_container
     ) {
     }
 

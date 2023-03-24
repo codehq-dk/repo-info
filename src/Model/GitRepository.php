@@ -39,12 +39,7 @@ class GitRepository implements Repository
     public function downloadCodeToLocalPath(string $local_path): void
     {
         $git_path = Environment::getGitPath();
-/*
-        var_dump($local_path . DIRECTORY_SEPARATOR . $this->id); die();
-        if (file_exists($local_path . DIRECTORY_SEPARATOR . $this->id)) {
-            return;
-        }
-*/
+
         try {
             $command = $git_path . " clone {$this->git_clone_address} {$local_path}";
             Bash::runCommand($command);
