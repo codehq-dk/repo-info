@@ -2,6 +2,8 @@
 
 namespace CodeHqDk\RepositoryInformation\Services;
 
+use CodeHqDk\RepositoryInformation\Model\InformationBlock;
+use CodeHqDk\RepositoryInformation\Service\InformationBlockFilterService;
 use Exception;
 use CodeHqDk\RepositoryInformation\Factory\RepositoryInformationFactory;
 use CodeHqDk\RepositoryInformation\Model\RepositoryInformation;
@@ -17,58 +19,107 @@ class RepositoryInformationService
     public function __construct(
         private readonly string $runtime_path,
         private readonly array $repository_list,
-        private readonly RepositoryInformationFactory $repository_information_factory
+        private readonly RepositoryInformationFactory $repository_information_factory,
+        private readonly InformationBlockFilterService $information_block_filter_service
     ) {}
 
     /**
      * @return RepositoryInformation[]
      */
-    public function list(): array
+    public function list(?string $filter_uuid = null): array
     {
         if (count($this->repository_list) === 0) {
             return [];
         }
 
-        return $this->getRepositoryInformationList();
+        return $this->getRepositoryInformationList($filter_uuid);
     }
 
     /**
      * @return RepositoryInformation[]
      */
-    private function getRepositoryInformationList(): array
+    private function getRepositoryInformationList(?string $filter_uuid = null): array
     {
         $repository_information_list = [];
 
         foreach ($this->repository_list as $repository)
         {
-            if ($this->doCachedDataExists($repository->getId()) === false) {
-                $this->buildRepositoryInformationCache($repository);
+            /**
+             * @var Repository $repository
+             */
+            $this->downloadCodeToLocalPathIfNeeded($repository);
+
+            if ($this->doCachedDataExists($repository->getId(), $filter_uuid) === false) {
+                $this->buildRepositoryInformationCache($repository, $filter_uuid);
             }
 
-            $repository_information_list[] = $this->getRepositoryInformationFromCache($repository->getId());
+            $repository_information_list[] = $this->getRepositoryInformationFromCache($repository->getId(), $filter_uuid);
         }
 
         return $repository_information_list;
     }
 
-    private function doCachedDataExists(string $repository_id): bool
+    private function downloadCodeToLocalPathIfNeeded(Repository $repository): void
     {
-        $file = $this->getRepositoryInformationCacheFilename($repository_id);
+        $download_path = $this->repository_information_factory->getLocalCodePath($repository->getId());
+
+        if (file_exists($download_path)) {
+            return;
+        }
+
+        $repository->downloadCodeToLocalPath($download_path);
+    }
+
+    private function doCachedDataExists(string $repository_id, ?string $filter_uuid = null): bool
+    {
+        $file = $this->getRepositoryInformationCacheFilename($repository_id, $filter_uuid);
 
         return file_exists($file);
     }
 
-    private function getRepositoryInformationFromCache(string $repository_id): RepositoryInformation
+    /**
+     * @param InformationBlock[] $information_block_list
+     *
+     * @return string
+     */
+    private function buildCacheId(array $information_block_list): string
     {
-        $file = $this->getRepositoryInformationCacheFilename($repository_id);
+        $raw_string = '';
+
+        foreach ($information_block_list as $information_block) {
+            $raw_string .= $information_block::class;
+        }
+
+        return md5($raw_string);
+    }
+
+    private function getRepositoryInformationFromCache(string $repository_id, ?string $filter_uuid = null): RepositoryInformation
+    {
+        $file = $this->getRepositoryInformationCacheFilename($repository_id, $filter_uuid);
         $json_txt = file_get_contents($file);
         $repository_information_array = json_decode($json_txt, true);
         return RepositoryInformation::fromArray($repository_information_array);
     }
 
-    private function getRepositoryInformationCacheFilename(string $repository_id): string
+    private function getRepositoryInformationCacheFilename(string $repository_id, ?string $filter_uuid = null): string
     {
-        return $this->getCacheFolder() . $repository_id . '.json';
+        if ($filter_uuid === null) {
+            return $this->getCacheFolder() . "{$repository_id}-unfiltered.json";
+        } else {
+            $cache_hash = $this->getCacheHash($filter_uuid);
+            return $this->getCacheFolder() . "{$repository_id}-{$filter_uuid}-{$cache_hash}.json";
+        }
+    }
+
+    private function getCacheHash(?string $filter_uuid = null): string
+    {
+        $hash = '';
+
+        foreach ($this->information_block_filter_service->getEnabledBlocks($filter_uuid) as $block_class_name) {
+            $hash .= $block_class_name;
+        }
+
+        return md5($hash);
     }
 
     private function getCacheFolder(): string
@@ -96,13 +147,13 @@ class RepositoryInformationService
     /**
      * @throws Exception
      */
-    private function buildRepositoryInformationCache(Repository $repository): void
+    private function buildRepositoryInformationCache(Repository $repository, ?string $filter_uuid = null): void
     {
-        $repository_information = $this->repository_information_factory->create($repository);
+        $repository_information = $this->repository_information_factory->create($repository, $filter_uuid);
 
         $json_txt = json_encode($repository_information->toArray());
 
-        $file_name = $this->getRepositoryInformationCacheFilename($repository->getId());
+        $file_name = $this->getRepositoryInformationCacheFilename($repository->getId(), $filter_uuid);
 
         $success = file_put_contents($file_name, $json_txt);
 

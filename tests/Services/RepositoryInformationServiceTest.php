@@ -23,6 +23,6 @@ class RepositoryInformationServiceTest extends TestCase
          */
         $repo_info_service = $this->dependency_injection_container->get(RepositoryInformationService::class);
 
-        $repo_info_list = $repo_info_service->list();
+        $repo_info_list = $repo_info_service->list('8f3251c1-d998-41d6-a45f-1e56513191ed');
     }
 }

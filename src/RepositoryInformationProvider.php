@@ -6,8 +6,11 @@ use CodeHqDk\RepositoryInformation\Factory\InformationFactory;
 use CodeHqDk\RepositoryInformation\Factory\RepositoryInformationFactory;
 use CodeHqDk\RepositoryInformation\Model\Repository;
 use CodeHqDk\RepositoryInformation\Registry\InformationFactoryRegistry;
+use CodeHqDk\RepositoryInformation\Service\InformationBlockFilterService;
 use CodeHqDk\RepositoryInformation\Service\ProviderDependencyService;
+use CodeHqDk\RepositoryInformation\Services\InformationBlockService;
 use CodeHqDk\RepositoryInformation\Services\RepositoryInformationService;
+use CodeHqDk\RepositoryInformation\Services\SimpleInformationBlockFilterService;
 use Slince\Di\Container;
 
 class RepositoryInformationProvider implements ProviderDependencyService
@@ -55,30 +58,36 @@ class RepositoryInformationProvider implements ProviderDependencyService
 */
     public function registerDependencies(): void
     {
+        $this->dependency_injection_container->register(InformationFactoryRegistry::class);
+        $this->dependency_injection_container->register(InformationBlockService::class);
+
+        $this->dependency_injection_container->register(RepositoryInformationFactory::class)->setArguments([
+            'runtime_path' => $this->runtime_path,
+            'information_factory_registry' => $this->dependency_injection_container->get(InformationFactoryRegistry::class),
+            'information_block_filter_service' => $this->dependency_injection_container->get(InformationBlockFilterService::class),
+        ]);
+
+        $this->dependency_injection_container->register(RepositoryInformationService::class)->setArguments([
+            'runtime_path' => $this->runtime_path,
+            'repository_list' => $this->repository_list,
+            'repository_information_factory' => $this->dependency_injection_container->get(RepositoryInformationFactory::class),
+            'information_block_filter_service' => $this->dependency_injection_container->get(InformationBlockFilterService::class),
+        ]);
+
+        $this->registerRegistries();
         $this->registerFactories();
         $this->registerServices();
-        $this->registerRegistries();
     }
 
     private function registerServices(): void
     {
-        $this->dependency_injection_container->register(RepositoryInformationService::class)->setArguments([
-            'runtime_path' => $this->runtime_path,
-            'repository_list' => $this->repository_list,
-            'repository_information_factory' => $this->dependency_injection_container->get(RepositoryInformationFactory::class)
-        ]);
     }
 
     private function registerFactories(): void
     {
-        $this->dependency_injection_container->register(RepositoryInformationFactory::class)->setArguments([
-            'runtime_path' => $this->runtime_path,
-            'information_factory_registry' => $this->dependency_injection_container->get(InformationFactoryRegistry::class)
-        ]);
     }
 
     private function registerRegistries(): void
     {
-        $this->dependency_injection_container->register(InformationFactoryRegistry::class);
     }
 }

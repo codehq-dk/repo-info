@@ -10,7 +10,7 @@ use CodeHqDk\RepositoryInformation\InformationBlocks\RepositoryTypeInformationBl
 use Exception;
 
 /**
- * Notice. This class requires a installation of git is present on the server
+ * Notice. This class requires that an installation of git is present on the server
  */
 class GitRepository implements Repository
 {
@@ -39,12 +39,17 @@ class GitRepository implements Repository
     public function downloadCodeToLocalPath(string $local_path): void
     {
         $git_path = Environment::getGitPath();
-
+/*
+        var_dump($local_path . DIRECTORY_SEPARATOR . $this->id); die();
+        if (file_exists($local_path . DIRECTORY_SEPARATOR . $this->id)) {
+            return;
+        }
+*/
         try {
             $command = $git_path . " clone {$this->git_clone_address} {$local_path}";
             Bash::runCommand($command);
-        } catch (LinuxBashHelperException) {
-            throw new Exception("Failed at downloading '{$this->name}' repository to local path '{$local_path}'");
+        } catch (LinuxBashHelperException $exception) {
+            throw new Exception("Failed at downloading '{$this->name}' repository to local path '{$local_path}' (Error message: {$exception->getMessage()}");
         }
     }
 
