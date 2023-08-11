@@ -2,12 +2,12 @@
 
 namespace CodeHqDk\RepositoryInformation\Services;
 
+use CodeHqDk\RepositoryInformation\Factory\RepositoryInformationFactory;
 use CodeHqDk\RepositoryInformation\Model\InformationBlock;
+use CodeHqDk\RepositoryInformation\Model\Repository;
+use CodeHqDk\RepositoryInformation\Model\RepositoryInformation;
 use CodeHqDk\RepositoryInformation\Service\InformationBlockFilterService;
 use Exception;
-use CodeHqDk\RepositoryInformation\Factory\RepositoryInformationFactory;
-use CodeHqDk\RepositoryInformation\Model\RepositoryInformation;
-use CodeHqDk\RepositoryInformation\Model\Repository;
 
 /**
  * This class is the primary entry point to use the Repository Information ecosystem.
@@ -62,11 +62,11 @@ class RepositoryInformationService
              */
             $this->downloadCodeToLocalPathIfNeeded($repository);
 
-            if ($this->doCachedDataExists($repository->getId(), $filter_uuid) === false) {
+            if ($this->doCachedDataExists($repository->getName(), $filter_uuid) === false) {
                 $this->buildRepositoryInformationCache($repository, $filter_uuid);
             }
 
-            $repository_information_list[] = $this->getRepositoryInformationFromCache($repository->getId(), $filter_uuid);
+            $repository_information_list[] = $this->getRepositoryInformationFromCache($repository->getName(), $filter_uuid);
         }
 
         return $repository_information_list;
@@ -74,7 +74,7 @@ class RepositoryInformationService
 
     private function downloadCodeToLocalPathIfNeeded(Repository $repository): void
     {
-        $download_path = $this->repository_information_factory->getLocalCodePath($repository->getId());
+        $download_path = $this->repository_information_factory->getLocalCodePath($repository->getName());
 
         if (file_exists($download_path)) {
             return;
@@ -88,22 +88,6 @@ class RepositoryInformationService
         $file = $this->getRepositoryInformationCacheFilename($repository_id, $filter_uuid);
 
         return file_exists($file);
-    }
-
-    /**
-     * @param InformationBlock[] $information_block_list
-     *
-     * @return string
-     */
-    private function buildCacheId(array $information_block_list): string
-    {
-        $raw_string = '';
-
-        foreach ($information_block_list as $information_block) {
-            $raw_string .= $information_block::class;
-        }
-
-        return md5($raw_string);
     }
 
     private function getRepositoryInformationFromCache(string $repository_id, ?string $filter_uuid = null): RepositoryInformation
@@ -158,7 +142,7 @@ class RepositoryInformationService
 
         $json_txt = json_encode($repository_information->toArray());
 
-        $file_name = $this->getRepositoryInformationCacheFilename($repository->getId(), $filter_uuid);
+        $file_name = $this->getRepositoryInformationCacheFilename($repository->getName(), $filter_uuid);
 
         $success = file_put_contents($file_name, $json_txt);
 

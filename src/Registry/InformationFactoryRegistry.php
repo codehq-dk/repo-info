@@ -5,7 +5,7 @@ namespace CodeHqDk\RepositoryInformation\Registry;
 use CodeHqDk\RepositoryInformation\Factory\InformationFactory;
 
 /**
- * This registry will hold a list of Repository Information Factories
+ * This registry will hold a list of Repository Information Factories, coming from the different plugins.
  *
  * @internal
  */

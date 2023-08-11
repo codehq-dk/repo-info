@@ -7,9 +7,8 @@
     "require": {
         "php": ">=8.1",
         "kodus/uuid-v4": "^1.2.0",
-        "codehq-dk/repo-info-contracts" : "^1.0.0-alpha1",
-        "codehq-dk/repo-info-example-plugin" : "^1.0.0-alpha1",
-        "codehq-dk/linux-bash-helper" : "^1.0.0-alpha1"
+        "codehq-dk/repo-info-contracts" : "^1.0.0-alpha4",
+        "codehq-dk/linux-bash-helper" : "^1.0.0-alpha2"
     },
     "autoload": {
         "psr-4": {
@@ -23,10 +22,12 @@
     },
     "require-dev": {
         "slince/di" : "^3.2.0",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "lcobucci/clock": "^3.0.0",
+        "codehq-dk/repo-info-example-plugin" : "^1.0.0-alpha4"
     },
     "scripts": {
-        "test": "vendor/bin/phpunit tests",
-        "test-report": "vendor/bin/phpunit tests/ --coverage-html tests/CoverageReport"
+        "test": "vendor/bin/phpunit tests/Unit",
+        "test-report": "vendor/bin/phpunit tests/Unit --coverage-html tests/CoverageReport"
     }
 }

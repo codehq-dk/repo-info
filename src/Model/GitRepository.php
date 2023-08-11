@@ -5,16 +5,17 @@ namespace CodeHqDk\RepositoryInformation\Model;
 use CodeHqDk\LinuxBashHelper\Bash;
 use CodeHqDk\LinuxBashHelper\Environment;
 use CodeHqDk\LinuxBashHelper\Exception\LinuxBashHelperException;
-use CodeHqDk\RepositoryInformation\InformationBlocks\RepositoryNameInformationBlock;
-use CodeHqDk\RepositoryInformation\InformationBlocks\RepositoryTypeInformationBlock;
+use CodeHqDk\RepositoryInformation\Exception\RepositoryInformationException;
 use Exception;
+use InvalidArgumentException;
+use Kodus\Helpers\UUID;
 
 /**
  * Notice. This class requires that an installation of git is present on the server
  */
 class GitRepository implements Repository
 {
-    private const VALID_ID_REGEX = '/^[0-9a-z-]+/';
+    private string $uuid;
 
     /**
      * $param string $git_clone_address https / ssh address
@@ -22,15 +23,14 @@ class GitRepository implements Repository
      * Public repository  -> Use the https address
      * Private repository -> use the ssh address (This requires that your server have valid ssh keys registered at Github)
      *
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function __construct(
-        private readonly string $id,
-        private readonly string $name,
         private readonly string $git_clone_address,
-        private readonly RepositoryCharacteristics $repository_characteristics
+        private readonly ?RepositoryCharacteristics $repository_characteristics = null,
+        ?string $uuid = null
     ) {
-        $this->throwExceptionOnInvalidId($this->id);
+        $this->uuid = $uuid ?? UUID::create();
     }
 
     /**
@@ -38,43 +38,29 @@ class GitRepository implements Repository
      */
     public function downloadCodeToLocalPath(string $local_path): void
     {
+        if (filter_var($this->git_clone_address, FILTER_VALIDATE_URL) === false) {
+            throw new RepositoryInformationException("The git clone address '{$this->git_clone_address}' is not a valid url");
+        }
+
         $git_path = Environment::getGitPath();
 
         try {
             $command = $git_path . " clone {$this->git_clone_address} {$local_path}";
             Bash::runCommand($command);
         } catch (LinuxBashHelperException $exception) {
-            throw new Exception("Failed at downloading '{$this->name}' repository to local path '{$local_path}' (Error message: {$exception->getMessage()}");
+            throw new Exception("Failed at downloading '{$this->git_clone_address}' repository to local path '{$local_path}' (Error message: {$exception->getMessage()}");
         }
     }
 
-    public function createRepositoryTypeInformationBlock(): RepositoryTypeInformationBlock
+    public function getUuId(): string
     {
-        return new RepositoryTypeInformationBlock(
-            'Repository type',
-            "Type",
-            "GIT",
-            time(),
-            '',
-            self::class,
-        );
+        return $this->uuid;
     }
 
-    public function createRepositoryNameInformationBlock(): RepositoryNameInformationBlock
+    public function getName(): string
     {
-        return new RepositoryNameInformationBlock(
-            'Repository name',
-            'Name',
-            $this->name,
-            time(),
-            '',
-            self::class,
-        );
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
+        $exploded_address = explode('/', $this->git_clone_address);
+        return end($exploded_address);
     }
 
     public function getRepositoryCharacteristics(): RepositoryCharacteristics
@@ -86,8 +72,7 @@ class GitRepository implements Repository
     {
         return [
             'fully_qualified_class_name' => self::class,
-            'id' => $this->id,
-            'name' => $this->name,
+            'uuid' => $this->uuid,
             'ssh_address' => $this->git_clone_address,
             'repository_characteristics' => $this->repository_characteristics->toArray()
         ];
@@ -96,19 +81,9 @@ class GitRepository implements Repository
     public static function fromArray(array $array): Repository
     {
        return new self(
-           $array['id'],
-           $array['name'],
            $array['ssh_address'],
-           RepositoryCharacteristics::fromArray($array['repository_characteristics'])
+           RepositoryCharacteristics::fromArray($array['repository_characteristics']),
+           $array['uuid']
        );
-    }
-
-    private function throwExceptionOnInvalidId(string $id): void
-    {
-        preg_match(self::VALID_ID_REGEX, $id, $matches);
-
-        if (count($matches) === 0 || $matches[0] !== $id) {
-            throw new Exception("Repository id value '{$id}' is not a valid format");
-        }
     }
 }

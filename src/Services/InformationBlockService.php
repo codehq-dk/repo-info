@@ -4,6 +4,9 @@ namespace CodeHqDk\RepositoryInformation\Services;
 
 use CodeHqDk\RepositoryInformation\Registry\InformationFactoryRegistry;
 
+/**
+ * This service will list all available Information blocks, coming from the different plugin information factories registered.
+ */
 class InformationBlockService
 {
     public function __construct(private readonly InformationFactoryRegistry $information_factory_registry)

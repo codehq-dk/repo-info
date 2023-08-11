@@ -20,6 +20,8 @@ use CodeHqDk\RepositoryInformation\Service\InformationBlockFilterService;
  *              ]
  *      ]
  * );
+ *
+ * ... and ask this service afterwards which blocks are enabled for a given uuid.
  */
 class SimpleInformationBlockFilterService implements InformationBlockFilterService
 {

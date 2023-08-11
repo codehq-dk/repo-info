@@ -1,21 +1,26 @@
 <?php
 
-namespace CodeHqDk\RepositoryInformation\Tests;
+namespace CodeHqDk\RepositoryInformation\Tests\Unit\Provider;
 
-use CodeHqDk\RepositoryInformation\InformationBlocks\HelloWorldInformationBlock;
-use CodeHqDk\RepositoryInformation\InformationBlocks\RepositoryNameInformationBlock;
+use CodeHqDk\RepositoryInformation\ExamplePlugin\InformationBlocks\HelloWorldInformationBlock;
+use CodeHqDk\RepositoryInformation\ExamplePlugin\Provider\HelloWorldInformationFactoryProvider;
+use CodeHqDk\RepositoryInformation\Factory\GitInformationFactory;
+use CodeHqDk\RepositoryInformation\InformationBlocks\GitNameInformationBlock;
 use CodeHqDk\RepositoryInformation\Model\GitRepository;
 use CodeHqDk\RepositoryInformation\Model\Repository;
 use CodeHqDk\RepositoryInformation\Model\RepositoryCharacteristics;
-use CodeHqDk\RepositoryInformation\Provider\HelloWorldInformationFactoryProvider;
 use CodeHqDk\RepositoryInformation\RepositoryInformationProvider;
 use CodeHqDk\RepositoryInformation\Service\InformationBlockFilterService;
 use CodeHqDk\RepositoryInformation\Services\InformationBlockService;
 use CodeHqDk\RepositoryInformation\Services\SimpleInformationBlockFilterService;
+use CodeHqDk\RepositoryInformation\Tests\Unit\Mock\MockInformationFactory1;
 use Slince\Di\Container;
 
 class TestProvider
 {
+    public const TEST_FILTER_ONLY_HELLO_WORLD = '8f3251c1-d998-41d6-a45f-1e56513191ed';
+    public const TEST_FILTER_HELLO_WORLD_AND_GIT_NAME = '7f3251c1-d998-41d6-c45f-1e56513191ed';
+
     private Container $dependency_injection_container;
 
     /**
@@ -24,28 +29,14 @@ class TestProvider
     public function __construct(private readonly array $repository_list =
         [
             new GitRepository(
-                'repo-info-contracts',
-                'Test repository 1',
                 'https://github.com/codehq-dk/repo-info-contracts.git',
-                new RepositoryCharacteristics(true, true, true, false),
+                new RepositoryCharacteristics(false, true, true, false),
             ),
             new GitRepository(
-                'repo-info-example-plugin',
-                'Test repository 2',
                 'https://github.com/codehq-dk/repo-info-example-plugin.git',
                 new RepositoryCharacteristics(true, true, true, false)
             ),
-/*
             new GitRepository(
-                'code-hq-webpage',
-                'Test repository 3',
-                'git@github.com:codehq-dk/webpage.git',
-                new RepositoryCharacteristics(true, false, false, false)
-            )
-*/
-            new GitRepository(
-                'linux-bash-helper',
-                'Linux Bash helper',
                 'https://github.com/codehq-dk/linux-bash-helper.git',
                 new RepositoryCharacteristics(true, true, false, false)
             ),
@@ -67,9 +58,12 @@ class TestProvider
         $this->dependency_injection_container->register(SimpleInformationBlockFilterService::class)->setArguments([
             'information_block_service' => $this->dependency_injection_container->get(InformationBlockService::class),
             'uuid_to_information_block_class_name_list_map' => [
-                '8f3251c1-d998-41d6-a45f-1e56513191ed' => [
+                self::TEST_FILTER_ONLY_HELLO_WORLD => [
                     HelloWorldInformationBlock::class,
-                    RepositoryNameInformationBlock::class
+                ],
+                self::TEST_FILTER_HELLO_WORLD_AND_GIT_NAME => [
+                    HelloWorldInformationBlock::class,
+                    GitNameInformationBlock::class
                 ]
             ]
         ]);
@@ -77,7 +71,7 @@ class TestProvider
         $this->dependency_injection_container->setAlias(InformationBlockFilterService::class, SimpleInformationBlockFilterService::class);
 
         $repository_information_provider = new RepositoryInformationProvider(
-            __DIR__ . DIRECTORY_SEPARATOR . "data",
+            dirname(__FILE__, 3) . DIRECTORY_SEPARATOR . "data",
             $this->repository_list,
             $this->dependency_injection_container
         );
